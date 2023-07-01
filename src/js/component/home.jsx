@@ -1,26 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+function Home() {
+  const [pokemon, setPokemon] = useState([]);
 
-//create your first component
-const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/pokemon')
+      .then(response => response.json())
+      .then(data => {setPokemon(data.result);console.log(data);})
+      .catch(error => console.log(error));
+  }, []);
+
+  console.log(pokemon);
+
+  return (
+    <ul>
+      {pokemon.map(element=> {
+        return <li key="key">{element.name}</li>
+      })}
+      
+    </ul>
+  );
+
 };
-
+          
 export default Home;
